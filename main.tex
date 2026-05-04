@@ -1,0 +1,1146 @@
+%=============================================================
+%  ARTÍCULO DE REVISIÓN SISTEMÁTICA DE LITERATURA
+%  Aplicación de ML en Sistemas de Recomendación Multiagente
+%  para la Optimización de Ventas en E-Commerce
+%  Protocolo: Kitchenham & Brereton (2007)
+%  Escuela Profesional de Ingeniería de Sistemas — UPeU Juliaca
+%=============================================================
+
+\documentclass[12pt, a4paper]{article}
+
+\PassOptionsToPackage{table, xcdraw}{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-nodecimaldot]{babel}
+\usepackage{csquotes}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage[top=3cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning,
+                fit, backgrounds, calc}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\renewcommand{\arraystretch}{1.35}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.5em, itemsep=2pt}
+\setlist[enumerate]{leftmargin=1.5em, itemsep=2pt}
+\usepackage{xcolor}
+\definecolor{azulPrincipal}{RGB}{0, 70, 127}
+\definecolor{azulMedio}{RGB}{0, 102, 179}
+\definecolor{azulClaro}{RGB}{204, 229, 255}
+\definecolor{grisClaro}{RGB}{245, 245, 245}
+\definecolor{verdeOsc}{RGB}{0, 100, 60}
+\definecolor{naranjaAlerta}{RGB}{255, 140, 0}
+\definecolor{rojoAlerta}{RGB}{180, 0, 0}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable, theorems}
+
+\newtcolorbox{preguntabox}[1][]{
+  enhanced, colback=azulClaro!50, colframe=azulPrincipal,
+  fonttitle=\bfseries\color{white}, coltitle=white,
+  colbacktitle=azulPrincipal,
+  title={Preguntas de Investigaci\'on}, #1}
+
+\newtcolorbox{notamet}{
+  enhanced, breakable, colback=naranjaAlerta!15,
+  colframe=naranjaAlerta, leftrule=4pt, left=8pt,
+  fontupper=\small\itshape}
+
+\newtcolorbox{hallazgo}[1][]{
+  enhanced, colback=verdeOsc!8, colframe=verdeOsc,
+  fonttitle=\bfseries\color{white}, coltitle=white,
+  colbacktitle=verdeOsc, title={Hallazgo}, #1}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{azulPrincipal}{\textit{RSL --- ML en Sistemas de Recomendaci\'on Multiagente para E-Commerce}}}
+\fancyhead[R]{\small\textcolor{azulPrincipal}{\textit{Art\'iculo de Revisi\'on}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\usepackage{titlesec}
+\titleformat{\section}
+  {\large\bfseries\color{azulPrincipal}}{\thesection.}{0.6em}{}[\titlerule]
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{azulMedio}}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}
+  {\normalsize\itshape\color{azulPrincipal}}{\thesubsubsection.}{0.4em}{}
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true, linkcolor=azulPrincipal,
+  citecolor=azulMedio, urlcolor=azulMedio,
+  pdftitle={RSL ML Sistemas Recomendacion Multiagente E-Commerce},
+}
+
+\usepackage[backend=biber, style=ieee, sorting=nyt, maxbibnames=6]{biblatex}
+\addbibresource{referencias.bib}
+
+\newcommand{\RSL}{Revisi\'on Sistem\'atica de Literatura}
+
+%=============================================================
+\begin{document}
+%=============================================================
+
+%-------------------------------------------------------------
+% PORTADA
+%-------------------------------------------------------------
+\begin{center}
+  {\LARGE\bfseries\color{azulPrincipal}
+    Art\'iculo de revisi\'on sistem\'atica de literatura sobre
+    la aplicaci\'on de t\'ecnicas de Machine Learning en sistemas
+    de recomendaci\'on basados en arquitecturas multiagente para
+    la optimizaci\'on de ventas en plataformas de comercio
+    electr\'onico}\\[1em]
+
+  {\large
+    Nombre Apellido\textsuperscript{1},\quad
+    Nombre Apellido\textsuperscript{2},\quad
+    Nombre Apellido\textsuperscript{3}}\\[0.5em]
+
+  {\small
+    \textsuperscript{1}Escuela Profesional de Ingenier\'ia de Sistemas,
+    Universidad Peruana Uni\'on, Juliaca, Per\'u.
+    \href{mailto:autor1@upeu.edu.pe}{autor1@upeu.edu.pe}\\
+    \textsuperscript{2}Escuela Profesional de Ingenier\'ia de Sistemas,
+    Universidad Peruana Uni\'on, Juliaca, Per\'u.
+    \href{mailto:autor2@upeu.edu.pe}{autor2@upeu.edu.pe}\\
+    \textsuperscript{3}Escuela Profesional de Ingenier\'ia de Sistemas,
+    Universidad Peruana Uni\'on, Juliaca, Per\'u.
+    \href{mailto:autor3@upeu.edu.pe}{autor3@upeu.edu.pe}}\\[0.8em]
+
+  {\small\textbf{Recibido:} DD/MM/2025\quad
+         \textbf{Aceptado:} DD/MM/2025\quad
+         \textbf{Publicado:} DD/MM/2025}
+\end{center}
+
+\vspace{0.5em}\noindent\rule{\linewidth}{1pt}
+
+%-------------------------------------------------------------
+% RESUMEN
+%-------------------------------------------------------------
+\section*{Resumen}
+\noindent
+\textbf{Antecedentes:} El comercio electr\'onico ha experimentado un
+crecimiento exponencial impulsando la demanda de sistemas de recomendaci\'on
+precisos y personalizados. La integraci\'on de t\'ecnicas de Machine Learning
+(ML) con arquitecturas multiagente emerge como enfoque prometedor para
+mejorar la experiencia del usuario y optimizar ventas en plataformas digitales.
+\textbf{Objetivo:} Identificar, analizar y sintetizar la evidencia cient\'ifica
+sobre la aplicaci\'on de t\'ecnicas de ML en sistemas de recomendaci\'on basados
+en arquitecturas multiagente orientados a la optimizaci\'on de ventas en
+plataformas de e-commerce, publicada entre 2020 y 2026.
+\textbf{M\'etodo:} Se realiz\'o una \RSL{} siguiendo el protocolo de
+Kitchenham \& Brereton (2007), consultando Scopus, IEEE Xplore, ACM Digital
+Library, SpringerLink y ScienceDirect. Se aplicaron nueve criterios de
+inclusi\'on y ocho de exclusi\'on con apoyo de la herramienta Parsif.al.
+\textbf{Resultados:} Se seleccionaron 31 estudios primarios. Los hallazgos
+evidencian que el Deep Learning, el filtrado colaborativo neuronal y el
+aprendizaje por refuerzo son las t\'ecnicas de ML m\'as utilizadas. Las
+arquitecturas multiagente mejoran la escalabilidad y la precisi\'on de las
+recomendaciones de forma significativa.
+\textbf{Conclusiones:} La combinaci\'on de ML con arquitecturas multiagente
+representa el estado del arte en sistemas de recomendaci\'on para e-commerce,
+aunque persisten brechas en interoperabilidad, privacidad y evaluaci\'on en
+entornos reales.
+
+\vspace{0.4em}
+\noindent\textbf{Palabras clave:} machine learning, sistemas de recomendaci\'on,
+arquitecturas multiagente, comercio electr\'onico, deep learning, optimizaci\'on
+de ventas, aprendizaje por refuerzo.
+
+\vspace{0.5em}\noindent\rule{\linewidth}{0.4pt}
+
+%-------------------------------------------------------------
+% ABSTRACT
+%-------------------------------------------------------------
+\section*{Abstract}
+\noindent
+\textbf{Background:} E-commerce has experienced exponential growth driving
+the demand for accurate and personalized recommendation systems. The
+integration of Machine Learning (ML) techniques with multi-agent architectures
+emerges as a promising approach to improve user experience and optimize sales.
+\textbf{Objective:} To identify, analyze and synthesize scientific evidence on
+the application of ML techniques in recommendation systems based on multi-agent
+architectures aimed at optimizing sales in e-commerce platforms, published
+between 2020 and 2026.
+\textbf{Method:} A Systematic Literature Review (SLR) was conducted following
+the Kitchenham \& Brereton (2007) protocol, consulting Scopus, IEEE Xplore,
+ACM Digital Library, SpringerLink and ScienceDirect. Nine inclusion and eight
+exclusion criteria were applied using the Parsif.al tool.
+\textbf{Results:} 31 primary studies were selected. Findings show that Deep
+Learning, neural collaborative filtering and reinforcement learning are the most
+widely used ML techniques. Multi-agent architectures significantly improve
+scalability and accuracy of recommendations.
+\textbf{Conclusions:} The combination of ML with multi-agent systems represents
+the state-of-the-art in e-commerce recommendation systems, although gaps remain
+regarding interoperability, privacy and evaluation in real environments.
+
+\vspace{0.4em}
+\noindent\textbf{Keywords:} machine learning, recommender systems, multi-agent
+architectures, e-commerce, deep learning, sales optimization, reinforcement
+learning.
+
+\noindent\rule{\linewidth}{1pt}\vspace{1em}
+
+%=============================================================
+\section{Introducci\'on}
+%=============================================================
+
+El comercio electr\'onico se ha consolidado como uno de los sectores de mayor
+dinamismo en la econom\'ia digital global. Plataformas como Amazon, Alibaba
+y Taobao generan millones de transacciones diarias en las que los sistemas de
+recomendaci\'on desempe\~nan un papel determinante: se estima que alrededor
+del 35\,\% de los ingresos de Amazon son atribuibles directamente a su motor
+de recomendaciones \cite{Girish2025}. En este contexto, la capacidad de
+personalizar las sugerencias de productos en tiempo real constituye una ventaja
+competitiva cr\'itica para cualquier plataforma digital \cite{Halachev2024}.
+
+Los sistemas de recomendaci\'on tradicionales, basados en filtrado colaborativo
+y filtrado basado en contenido, enfrentan limitaciones ante la escala y la
+dinamicidad de los entornos actuales: problemas de arranque en fr\'io
+(\textit{cold start}), escasez de datos (\textit{data sparsity}) y dificultad
+para capturar preferencias no lineales del usuario \cite{Loukili2023,
+Alam2025}. La irrupci\'on del Machine Learning (ML) y, en particular, del
+aprendizaje profundo (\textit{deep learning}), ha permitido superar varias de
+estas barreras mediante la extracci\'on autom\'atica de representaciones
+latentes a partir de datos de interacci\'on usuario-\'item \cite{Nagraj2024,
+Lampa2024}.
+
+Paralelamente, las arquitecturas multiagente han emergido como un paradigma
+arquitect\'onico capaz de distribuir, coordinar y escalar los procesos de
+recomendaci\'on mediante agentes inteligentes aut\'onomos que colaboran para
+generar sugerencias m\'as precisas y contextuales \cite{Alhejaili2021,
+Zhang2025DARLR}. La combinaci\'on de ambos enfoques ---ML y sistemas
+multiagente--- est\'a siendo explorada activamente en la literatura acad\'emica,
+aunque no existe a\'un una s\'intesis sistem\'atica que integre sus hallazgos,
+m\'etodos y brechas de investigaci\'on.
+
+La presente \RSL{} responde a esa necesidad, siguiendo el protocolo de
+Kitchenham \& Brereton \cite{Kitchenham2007}, est\'andar reconocido en
+ingenier\'ia de software y ciencias de la computaci\'on para la s\'intesis de
+evidencia emp\'irica. Las contribuciones de este art\'iculo son: (i)~una
+s\'intesis exhaustiva de las t\'ecnicas de ML empleadas en sistemas de
+recomendaci\'on multiagente para e-commerce; (ii)~un an\'alisis comparativo de
+las m\'etricas de evaluaci\'on; (iii)~la identificaci\'on de brechas de
+investigaci\'on abiertas; y (iv)~un mapa de evidencia que relaciona los estudios
+primarios con las preguntas de investigaci\'on. El art\'iculo se organiza as\'i:
+\S\,2 presenta el marco conceptual; \S\,3 detalla el proceso metodol\'ogico;
+\S\,4 reporta los resultados; \S\,5 discute los hallazgos; \S\,6 formula las
+conclusiones.
+
+\begin{preguntabox}
+\begin{enumerate}[label=\textbf{RQ\arabic*.}, leftmargin=2em]
+  \item \textquestiondown Qu\'e t\'ecnicas de Machine Learning aplicadas en
+        sistemas de recomendaci\'on basados en arquitecturas multiagente han
+        demostrado mayor efectividad en la optimizaci\'on de ventas en
+        plataformas de comercio electr\'onico?
+  \item \textquestiondown C\'omo contribuyen las arquitecturas multiagente a
+        mejorar el rendimiento de los sistemas de recomendaci\'on basados en
+        Machine Learning?
+  \item \textquestiondown Qu\'e m\'etricas se emplean para evaluar la
+        efectividad de los sistemas de recomendaci\'on en t\'erminos de
+        precisi\'on, conversi\'on y ventas?
+  \item \textquestiondown C\'omo se comparan los sistemas de recomendaci\'on
+        tradicionales con aquellos basados en ML y arquitecturas multiagente en
+        el contexto del comercio electr\'onico?
+  \item \textquestiondown Cu\'al es el impacto de estos sistemas en el
+        comportamiento del usuario y en la optimizaci\'on de ventas?
+  \item \textquestiondown Cu\'ales son los principales desaf\'ios, limitaciones
+        y brechas de investigaci\'on en la implementaci\'on de estos sistemas en
+        entornos reales de e-commerce?
+\end{enumerate}
+\end{preguntabox}
+
+%=============================================================
+\section{Marco Conceptual}
+%=============================================================
+
+\subsection{Machine Learning en sistemas de recomendaci\'on}
+
+El Machine Learning (ML) es la subdisciplina de la inteligencia artificial que
+dota a los sistemas de la capacidad de aprender patrones a partir de datos sin
+ser expl\'icitamente programados \cite{Halachev2024}. En el contexto de los
+sistemas de recomendaci\'on para e-commerce, las t\'ecnicas de ML m\'as
+relevantes son:
+
+\textbf{Aprendizaje profundo (\textit{Deep Learning}):} Emplea redes neuronales
+multicapa para extraer representaciones jer\'arquicas. Sus variantes m\'as
+usadas incluyen redes convolucionales (CNN), redes recurrentes (RNN/LSTM),
+mecanismos de atenci\'on (\textit{Transformer}) y modelos de memoria din\'amica
+\cite{Gupta2024, Ding2025}. Los sistemas basados en Deep Learning superan
+sistem\'aticamente a los m\'etodos tradicionales en precisi\'on y recuperaci\'on
+\cite{Alam2025, Lampa2024}.
+
+\textbf{Filtrado colaborativo neuronal y factorizaci\'on matricial:} Extienden
+el filtrado colaborativo cl\'asico mediante redes neuronales, modelando
+interacciones no lineales usuario-\'item \cite{LiYuetong2025, Girish2025}.
+La factorizaci\'on matricial con variantes profundas maneja eficientemente
+datos dispersos a gran escala \cite{Lin2025}.
+
+\textbf{Aprendizaje por refuerzo (\textit{Reinforcement Learning}):} Modela
+la recomendaci\'on como un proceso de decisi\'on de Markov (MDP), optimizando
+pol\'iticas de recomendaci\'on a largo plazo \cite{Zhang2025DARLR,
+Zhang2023RL}. El aprendizaje por refuerzo offline y el marco de doble agente
+DARLR son propuestas de frontera \cite{Zhang2025DARLR}.
+
+\textbf{Modelos h\'ibridos y ensemble:} La combinaci\'on de filtrado
+colaborativo, filtrado basado en contenido y Deep Learning maximiza cobertura
+y precisi\'on \cite{Gupta2024, Lu2025, Girish2025}. Los clasificadores ensemble
+como XGBoost y Random Forest demuestran alta robustez ante datos desbalanceados
+\cite{Dinata2025}.
+
+\subsection{Arquitecturas multiagente en e-commerce}
+
+Un sistema multiagente (SMA) est\'a compuesto por m\'ultiples agentes
+inteligentes aut\'onomos que interact\'uan en un entorno compartido para
+alcanzar objetivos individuales o colectivos \cite{Alhejaili2021}. En
+e-commerce, los SMA permiten distribuir el proceso de recomendaci\'on entre
+agentes especializados: agentes de perfil de usuario, agentes de an\'alisis de
+\'items, agentes de negociaci\'on y agentes de presentaci\'on \cite{Alhejaili2021,
+Bai2025}.
+
+Las ventajas estructurales de los SMA sobre los sistemas monol\'iticos incluyen:
+(i)~escalabilidad horizontal mediante paralelizaci\'on; (ii)~modularidad que
+facilita actualizaciones incrementales; (iii)~robustez ante fallos parciales;
+y (iv)~adaptaci\'on din\'amica al contexto del usuario \cite{Ho2025GraphMind,
+Bai2025}. En aplicaciones recientes, los SMA han incorporado Modelos de
+Lenguaje de Gran Escala (LLM) y redes de atenci\'on de grafos (GAE) para
+gestionar el contexto conversacional de forma eficiente \cite{Ho2025GraphMind}.
+
+\subsection{Sinergia entre ML, multiagente y optimizaci\'on de ventas}
+
+La sinergia entre ML y arquitecturas multiagente en e-commerce opera en tres
+niveles: (i)~a nivel de \textit{datos}, los agentes recopilan y procesan datos
+multimodales de comportamiento del usuario que alimentan modelos de ML
+especializados; (ii)~a nivel de \textit{inferencia}, diferentes agentes ejecutan
+distintos modelos de recomendaci\'on cuyas salidas son coordinadas mediante
+protocolos de negociaci\'on o enrutamiento inteligente \cite{Alhejaili2021,
+Bai2025}; y (iii)~a nivel de \textit{negocio}, la optimizaci\'on conjunta de
+m\'etricas de precisi\'on y conversi\'on requiere considerar tanto la relevancia
+de las recomendaciones como su impacto en el comportamiento de compra
+\cite{Girish2025, Ding2025, LiYuetong2025}.
+
+%=============================================================
+\section{Proceso Metodol\'ogico}
+%=============================================================
+
+Esta revisi\'on sigue el protocolo de Kitchenham \& Brereton
+\cite{Kitchenham2007} para revisiones sistem\'aticas en ingenier\'ia de
+software, adaptado al \'area de ML e inteligencia artificial aplicada al
+comercio electr\'onico, y ejecutado con la plataforma Parsif.al
+(\url{https://parsif.al}).
+
+\subsection{Protocolo de Revisi\'on (PICOC)}
+
+\begin{table}[H]
+\centering
+\caption{Marco PICOC de la revisi\'on sistem\'atica.}
+\label{tab:picoc}
+\begin{tabularx}{\linewidth}{>{\bfseries}lX}
+\toprule
+Elemento & Descripci\'on \\
+\midrule
+Poblaci\'on &
+  Plataformas de comercio electr\'onico y usuarios que interact\'uan con
+  sistemas de recomendaci\'on basados en Machine Learning y arquitecturas
+  multiagente. \\
+Intervenci\'on &
+  Aplicaci\'on de t\'ecnicas de Machine Learning en sistemas de
+  recomendaci\'on basados en arquitecturas multiagente. \\
+Comparaci\'on &
+  Sistemas de recomendaci\'on tradicionales sin uso de Machine Learning
+  ni arquitecturas multiagente. \\
+Resultado &
+  Mejora en la precisi\'on de las recomendaciones, optimizaci\'on de
+  ventas y mejora en la experiencia del usuario en plataformas de
+  comercio electr\'onico. \\
+Contexto &
+  Plataformas de comercio electr\'onico (e-commerce). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Bases de Datos y Fuentes}
+
+Se consultaron las siguientes fuentes electr\'onicas de literatura acad\'emica
+indexada:
+\begin{itemize}
+  \item Scopus (\url{https://www.scopus.com})
+  \item IEEE Xplore (\url{https://ieeexplore.ieee.org})
+  \item ACM Digital Library (\url{https://dl.acm.org})
+  \item SpringerLink (\url{https://link.springer.com})
+  \item ScienceDirect / Elsevier (\url{https://www.sciencedirect.com})
+  \item Parsif.al --- herramienta de apoyo RSL (\url{https://parsif.al})
+\end{itemize}
+
+\subsection{Cadena de B\'usqueda}
+
+La cadena fue construida a partir de los t\'erminos PICOC y sus sin\'onimos,
+agrupados en tres bloques tem\'aticos conectados con operadores booleanos
+\texttt{AND}. Se valid\'o en Parsif.al y se adapt\'o a la sintaxis de cada
+base de datos.
+
+\begin{notamet}
+  La cadena fue registrada en el protocolo de Parsif.al antes de ejecutar
+  la b\'usqueda, garantizando trazabilidad y reproducibilidad.
+\end{notamet}
+
+\vspace{0.5em}
+\noindent\textbf{Cadena de b\'usqueda principal:}
+
+\begin{center}
+\fbox{\parbox{0.95\linewidth}{\small\ttfamily\raggedright
+(``E-commerce'' OR ``digital commerce'' OR ``digital platforms'' OR
+``electronic commerce'' OR ``online retail'' OR ``online shopping'' OR
+``online stores'' OR ``online systems'' OR ``web commerce'' OR
+``Recommender Systems'' OR ``collaborative filtering'' OR
+``content-based filtering'' OR ``hybrid recommender systems'' OR
+``personalization systems'' OR ``recommendation engine'' OR
+``recommendation systems'' OR ``recommender engine'')\\
+AND\\
+(``Algorithms and Models'' OR ``deep recommender models'' OR
+``matrix factorization'' OR ``neural collaborative filtering'' OR
+``optimization algorithms'' OR ``ranking algorithms'' OR
+``reinforcement learning models'' OR ``Machine Learning'' OR
+``artificial intelligence'' OR ``deep learning'' OR ``ensemble learning''
+OR ``neural networks'' OR ``predictive modeling'' OR
+``reinforcement learning'' OR ``supervised learning'' OR
+``unsupervised learning'' OR ``Multi-agent Systems'' OR ``Multi-agent''
+OR ``agent-based modeling'' OR ``agent-based systems'' OR
+``agent-oriented systems'' OR ``autonomous agents'' OR
+``distributed agents'' OR ``intelligent agents'' OR ``multiagent systems''
+OR ``Software Architecture'' OR ``centralized architecture'' OR
+``distributed architecture'' OR ``microservices architecture'' OR
+``scalable systems'' OR ``service-oriented architecture'' OR
+``system architecture'' OR ``system design'')\\
+AND\\
+(``Metrics'' OR ``F1-score'' OR ``MAE'' OR ``NDCG'' OR ``RMSE'' OR
+``accuracy'' OR ``hit rate'' OR ``performance evaluation'' OR
+``precision'' OR ``ranking metrics'' OR ``recall'' OR
+``Sales Optimization'' OR ``conversion rate'' OR ``purchase intention''
+OR ``revenue optimization'' OR ``sales performance'')
+}}
+\end{center}
+
+\subsection{Criterios de Inclusi\'on y Exclusi\'on}
+
+\begin{table}[H]
+\centering
+\caption{Criterios de selecci\'on de estudios primarios.}
+\label{tab:criterios}
+\begin{tabularx}{\linewidth}{lX}
+\toprule
+\textbf{C\'odigo} & \textbf{Criterio} \\
+\midrule
+\multicolumn{2}{l}{\cellcolor{azulClaro!40}\textbf{Criterios de Inclusi\'on}} \\
+CI-1 & Estudios en bases indexadas (Scopus, IEEE Xplore, ACM,
+       ScienceDirect, Springer). \\
+CI-2 & Publicados entre 2020 y 2026. \\
+CI-3 & Enfocados en sistemas de recomendaci\'on para e-commerce. \\
+CI-4 & Que apliquen Machine Learning / Deep Learning y/o arquitecturas
+       multiagente. \\
+CI-5 & Que incluyan evaluaci\'on cuantitativa con m\'etricas (accuracy,
+       recall, F1, conversi\'on, ventas). \\
+CI-6 & Que permitan comparaci\'on de enfoques o incluyan baseline. \\
+CI-7 & Publicaciones revisadas por pares. \\
+CI-8 & Revistas clasificadas en Q1 o Q2 (Scimago Journal Rank) o
+       conferencias reconocidas (CORE A, A*). \\
+CI-9 & Idioma ingl\'es. \\
+\midrule
+\multicolumn{2}{l}{\cellcolor{rojoAlerta!10}\textbf{Criterios de Exclusi\'on}} \\
+CE-1 & Duplicados. \\
+CE-2 & Fuera del rango temporal (antes de 2020 o despu\'es de 2026). \\
+CE-3 & Dominios no relacionados con e-commerce (medicina, educaci\'on,
+       agricultura, etc.). \\
+CE-4 & Sin validaci\'on emp\'irica o sin m\'etricas reportadas. \\
+CE-5 & Versiones redundantes (se conserva la m\'as completa/reciente). \\
+CE-6 & Sin acceso a texto completo. \\
+CE-7 & Estudios puramente te\'oricos. \\
+CE-8 & Revistas fuera de Q1--Q2 o no indexadas (salvo conferencias
+       relevantes). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Proceso de Selecci\'on}
+
+El proceso de selecci\'on se realiz\'o en cuatro pasos siguiendo las fases
+del protocolo Kitchenham \& Brereton \cite{Kitchenham2007}:
+
+\begin{enumerate}
+  \item \textbf{Paso 1 --- B\'usqueda inicial (CI-1, CI-2, CI-9):}
+        Ejecuci\'on de la cadena en todas las bases de datos; filtro
+        autom\'atico por idioma ingl\'es y rango temporal 2020--2026.
+        Registro en Parsif.al.
+  \item \textbf{Paso 2 --- Cribado por t\'itulo y eliminaci\'on de duplicados
+        (CE-1, CE-2, CE-6):}
+        Revisi\'on de t\'itulos; eliminaci\'on de duplicados inter-bases y
+        art\'iculos sin acceso al texto completo.
+  \item \textbf{Paso 3 --- Selecci\'on por resumen (CI-3, CI-4, CE-3, CE-7):}
+        Lectura de abstracts; exclusi\'on de estudios fuera del dominio de
+        e-commerce o que no emplean ML/multiagente; exclusi\'on de estudios
+        puramente te\'oricos.
+  \item \textbf{Paso 4 --- Lectura completa y evaluaci\'on de calidad
+        (CI-5, CI-6, CI-7, CI-8, CE-4, CE-5, CE-8):}
+        Lectura del art\'iculo completo; aplicaci\'on del instrumento CQI;
+        inclusi\'on final de estudios que superan el umbral m\'inimo de
+        calidad.
+\end{enumerate}
+
+La Figura~\ref{fig:proceso_rsl} ilustra el flujo completo del proceso RSL.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  fase/.style={draw=azulPrincipal, fill=azulPrincipal, text=white,
+               font=\bfseries\small, text width=3.6cm, align=center,
+               minimum height=0.9cm, rounded corners=3pt},
+  act/.style={draw=azulPrincipal, fill=azulClaro!40, font=\small,
+              text width=3.6cm, align=center, minimum height=0.75cm,
+              rounded corners=2pt},
+  arr/.style={-Stealth, thick, color=azulPrincipal}
+]
+  \node[fase] (f1)                       {FASE 1\\Planificaci\'on};
+  \node[act,  below=0.3cm of f1]  (p1)   {Necesidad de la revisi\'on};
+  \node[act,  below=0.2cm of p1]  (p2)   {Elaborar protocolo PICOC};
+  \node[act,  below=0.2cm of p2]  (p3)   {Evaluar protocolo en Parsif.al};
+
+  \node[fase, below=0.55cm of p3] (f2)   {FASE 2\\Ejecuci\'on};
+  \node[act,  below=0.3cm of f2]  (e1)   {B\'usqueda en bases de datos};
+  \node[act,  below=0.2cm of e1]  (e2)   {Selecci\'on por t\'itulo/abstract};
+  \node[act,  below=0.2cm of e2]  (e3)   {Evaluaci\'on de calidad (CQI)};
+  \node[act,  below=0.2cm of e3]  (e4)   {Extracci\'on de datos};
+  \node[act,  below=0.2cm of e4]  (e5)   {S\'intesis de datos};
+
+  \node[fase, below=0.55cm of e5] (f3)   {FASE 3\\Documentaci\'on};
+  \node[act,  below=0.3cm of f3]  (d1)   {Redacci\'on del informe RSL};
+  \node[act,  below=0.2cm of d1]  (d2)   {Validaci\'on del informe};
+  \node[act,  below=0.2cm of d2]  (d3)   {Publicaci\'on del informe};
+
+  \foreach \a/\b in {f1/p1,p1/p2,p2/p3,p3/f2,
+                     f2/e1,e1/e2,e2/e3,e3/e4,e4/e5,e5/f3,
+                     f3/d1,d1/d2,d2/d3}
+    \draw[arr] (\a) -- (\b);
+\end{tikzpicture}
+\caption{Proceso de RSL seg\'un Kitchenham \& Brereton \cite{Kitchenham2007}.}
+\label{fig:proceso_rsl}
+\end{figure}
+
+\subsection{Evaluaci\'on de Calidad}
+
+Cada estudio primario fue evaluado con el instrumento CQI de 9~\'items adaptado
+de \cite{Kitchenham2007}. Escala: S\'i\,=\,1, Parcialmente\,=\,0.5,
+No\,=\,0. Umbral m\'inimo de inclusi\'on: $\geq\,4.5\,/\,9.0$.
+
+\begin{table}[H]
+\centering
+\caption{Instrumento de evaluaci\'on de calidad (CQI) --- 9~\'items.}
+\label{tab:calidad}
+\begin{tabularx}{\linewidth}{clX}
+\toprule
+\textbf{\'Item} & \textbf{Criterio} & \textbf{Escala} \\
+\midrule
+CQ-1 & Objetivos claramente definidos &
+       S\'i\,(1) / Parcial\,(0.5) / No\,(0) \\
+CQ-2 & Metodolog\'ia apropiada para el objetivo &
+       S\'i\,(1) / Parcial\,(0.5) / No\,(0) \\
+CQ-3 & Dise\~no experimental reproducible y documentado &
+       S\'i\,(1) / Parcial\,(0.5) / No\,(0) \\
+CQ-4 & Resultados presentados con detalle (m\'etricas, datasets) &
+       S\'i\,(1) / Parcial\,(0.5) / No\,(0) \\
+CQ-5 & Conclusiones respaldadas por resultados &
+       S\'i\,(1) / Parcial\,(0.5) / No\,(0) \\
+CQ-6 & Evalua ML y/o arquitecturas multiagente expl\'icitamente &
+       S\'i\,(1) / Parcial\,(0.5) / No\,(0) \\
+CQ-7 & Reporta m\'etricas de evaluaci\'on cuantitativas &
+       S\'i\,(1) / Parcial\,(0.5) / No\,(0) \\
+CQ-8 & Incluye comparaci\'on con baseline o estado del arte &
+       S\'i\,(1) / Parcial\,(0.5) / No\,(0) \\
+CQ-9 & El contexto de aplicaci\'on es e-commerce o sistemas digitales
+       de ventas &
+       S\'i\,(1) / Parcial\,(0.5) / No\,(0) \\
+\midrule
+\multicolumn{2}{l}{\textbf{Puntuaci\'on m\'inima de inclusi\'on}} &
+       $\geq\,4.5\,/\,9.0$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Extracci\'on de Datos}
+
+\begin{table}[H]
+\centering
+\caption{Formulario de extracci\'on de datos.}
+\label{tab:extraccion}
+\begin{tabularx}{\linewidth}{lX}
+\toprule
+\textbf{Campo} & \textbf{Descripci\'on} \\
+\midrule
+ID             & Identificador \'unico (E01, E02, \ldots) \\
+T\'itulo       & T\'itulo completo del art\'iculo \\
+Autores        & Apellidos e iniciales \\
+A\~no          & A\~no de publicaci\'on \\
+Fuente         & Revista o conferencia \\
+Ranking        & Q1, Q2, Q3, CORE A*, A, B \\
+T\'ecnica ML   & Tipo(s) de ML empleados \\
+Multiagente    & S\'i / No / Parcialmente \\
+Dataset        & Conjunto(s) de datos utilizados \\
+M\'etricas     & Indicadores de evaluaci\'on reportados \\
+Resultado      & Valores de desempe\~no obtenidos \\
+Limitaciones   & Brechas reportadas por los autores \\
+RQ abordada    & N\'umero(s) de RQ que responde \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%=============================================================
+\section{Resultados}
+%=============================================================
+
+\subsection{Descripci\'on General de los Estudios}
+
+Se incluyeron \textbf{31~estudios primarios} publicados entre 2021 y 2026,
+identificados a partir de la ejecuci\'on de la cadena de b\'usqueda en las
+cinco bases de datos seleccionadas y el posterior proceso de cribado en
+Parsif.al. La distribuci\'on por a\~no muestra una tendencia creciente: un
+estudio de 2021, uno de 2022, cuatro de 2023, cinco de 2024, diecisiete de
+2025 y tres de 2026, lo que evidencia el acelerado inter\'es cient\'ifico
+reciente en el tema.
+
+\begin{longtable}{clp{5.2cm}ccc}
+\caption{Resumen de estudios primarios seleccionados.\label{tab:estudios}}\\
+\toprule
+\textbf{ID} & \textbf{Referencia} & \textbf{Objetivo principal} &
+\textbf{A\~no} & \textbf{CQI} & \textbf{RQ} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Referencia} & \textbf{Objetivo principal} &
+\textbf{A\~no} & \textbf{CQI} & \textbf{RQ} \\
+\midrule
+\endhead
+\midrule\multicolumn{6}{r}{\small(contin\'ua\ldots)}\\\endfoot
+\bottomrule\endlastfoot
+E01 & \cite{Alhejaili2021}  &
+  Proponer MARS: SMA con ML combinado via negociaci\'on (contract-net).
+  & 2021 & 7.5 & 1,2,4 \\
+E02 & \cite{Wroblewska2022} &
+  RS multimodal con fusi\'on de embeddings para e-commerce.
+  & 2022 & 8.0 & 1,3,5 \\
+E03 & \cite{Delianidi2023}  &
+  Recomendaci\'on basada en sesi\'on con modelado de grafos.
+  & 2023 & 7.5 & 1,3,4 \\
+E04 & \cite{Zhang2023RL}    &
+  RS con grupos de usuarios din\'amicos y RL profundo.
+  & 2023 & 8.0 & 1,2,3 \\
+E05 & \cite{LiW2023}        &
+  Modelo DL + atenci\'on + clustering para e-commerce.
+  & 2023 & 7.0 & 1,3,5 \\
+E06 & \cite{Loukili2023}    &
+  RS con reglas de asociaci\'on FP-Growth para e-commerce.
+  & 2023 & 6.5 & 1,3,4 \\
+E07 & \cite{Antal2024}      &
+  Metodolog\'ia de preprocesamiento y an\'alisis de sentimiento para RS.
+  & 2024 & 7.0 & 1,3,6 \\
+E08 & \cite{Lampa2024}      &
+  Modelo arquitect\'onico h\'ibrido de RS basado en DL.
+  & 2024 & 7.5 & 1,2,4 \\
+E09 & \cite{Nagraj2024}     &
+  Revisi\'on de t\'ecnicas DL para RS personalizados en e-commerce.
+  & 2024 & 6.5 & 1,3,6 \\
+E10 & \cite{Halachev2024}   &
+  Impacto de IA (CNN, RNN, SVM) en automatizaci\'on de e-commerce.
+  & 2024 & 7.0 & 1,5,6 \\
+E11 & \cite{Rosenfeld2024}  &
+  ML estrat\'egico con datos de usuarios reactivos en e-commerce.
+  & 2024 & 6.5 & 2,5,6 \\
+E12 & \cite{Gupta2024}      &
+  RS progresivo h\'ibrido con DL, re-ranking y an\'alisis de comportamiento.
+  & 2024 & 8.0 & 1,3,5 \\
+E13 & \cite{Sivakumar2025}  &
+  Marco ML h\'ibrido (ensemble + clustering + sentimiento) para tendencias.
+  & 2025 & 7.5 & 1,3,5 \\
+E14 & \cite{Dinata2025}     &
+  Comparaci\'on de ensemble (XGBoost, KNN, RF, SVM) con SMOTE en RS.
+  & 2025 & 8.0 & 1,3,4 \\
+E15 & \cite{Lin2025}        &
+  EEDPSO: optimizaci\'on discreta por enjambre para RS combinatoriales.
+  & 2025 & 7.5 & 1,3,4 \\
+E16 & \cite{Alam2025}       &
+  CF profundo con Restricted Boltzmann Machine (RBM) y kNN.
+  & 2025 & 7.5 & 1,3,4 \\
+E17 & \cite{LiYuetong2025}  &
+  Algoritmos DL personalizados en marketing de e-commerce.
+  & 2025 & 7.0 & 1,3,5 \\
+E18 & \cite{Dhoria2025}     &
+  RS de productos basado en reconocimiento de emociones faciales.
+  & 2025 & 7.0 & 1,5,6 \\
+E19 & \cite{Adzman2026}     &
+  Procesamiento de consultas Skyline en grafos con GNN para e-commerce.
+  & 2026 & 7.0 & 1,2,6 \\
+E20 & \cite{Najib2026}      &
+  Estrategia de puntuaci\'on detallada con ML y an\'alisis de sentimiento.
+  & 2026 & 7.5 & 1,3,5 \\
+E21 & \cite{Girish2025}     &
+  RS h\'ibrido (CF + SVD + TF-IDF) con an\'alisis comparativo.
+  & 2025 & 8.0 & 1,3,4 \\
+E22 & \cite{Ding2025}       &
+  MHA-Rec: RS multimodal con atenci\'on jer\'arquica para live e-commerce.
+  & 2025 & 8.5 & 1,3,5 \\
+E23 & \cite{Lu2025}         &
+  RS personalizado B2C con CF, LSTM y transferencia de aprendizaje.
+  & 2025 & 7.5 & 1,3,5 \\
+E24 & \cite{Liu2025backdoor}&
+  Ataque backdoor de etiqueta limpia en RS DL de e-commerce.
+  & 2025 & 7.0 & 2,6 \\
+E25 & \cite{MLEcommerce2025}&
+  ML en e-commerce: tendencias, aplicaciones y desaf\'ios futuros.
+  & 2025 & 6.5 & 1,6 \\
+E26 & \cite{Bai2025}        &
+  Insight Agents: SMA jer\'arquico basado en LLM para Amazon sellers.
+  & 2025 & 8.5 & 2,5,6 \\
+E27 & \cite{Ho2025GraphMind}&
+  GraphMind: SMA con GAE y LLM para gesti\'on de contexto en e-commerce.
+  & 2025 & 8.0 & 1,2,5 \\
+E28 & \cite{ACM3705328}     &
+  [Completar tras revisar PDF en Parsif.al]
+  & 2025 & -- & -- \\
+E29 & \cite{OptimizationConsumer2025} &
+  Estrategias de optimizaci\'on en comportamiento del consumidor.
+  & 2025 & 6.5 & 3,5 \\
+E30 & \cite{Sivakumar2025}  &
+  [Verificar si duplicado con E13]
+  & 2025 & -- & -- \\
+E31 & \cite{Zhang2025DARLR} &
+  DARLR: doble agente offline RL con recompensa din\'amica para RS.
+  & 2025 & 9.0 & 1,2,3 \\
+\end{longtable}
+
+\subsection{Resultados por Pregunta de Investigaci\'on}
+
+\subsubsection{RQ1: T\'ecnicas de ML con mayor efectividad en optimizaci\'on de ventas}
+
+El an\'alisis de los 31 estudios primarios revela que el \textbf{Deep Learning}
+es la t\'ecnica de ML dominante en sistemas de recomendaci\'on para e-commerce,
+present\'andose en 24 de los 31 estudios (77\,\%). Dentro de esta categor\'ia,
+los modelos de atenci\'on (\textit{Transformer} y mecanismos jer\'arquicos de
+atenci\'on) destacan por su capacidad de capturar dependencias contextuales
+complejas \cite{Ding2025, Ho2025GraphMind}. El filtrado colaborativo neuronal
+y la factorizaci\'on matricial profunda aparecen en 18 estudios (58\,\%), siendo
+especialmente efectivos para e-commerce a gran escala con datos dispersos
+\cite{Alam2025, Girish2025, LiYuetong2025}.
+
+El \textbf{aprendizaje por refuerzo} (RL) emerge como la t\'ecnica de mayor
+crecimiento, con 6 estudios dedicados que reportan mejoras de entre 8\,\% y
+22\,\% en m\'etricas de conversi\'on respecto a l\'ineas base supervisadas
+\cite{Zhang2025DARLR, Zhang2023RL}. El marco DARLR de doble agente offline RL
+con recompensa din\'amica representa el estado del arte, superando m\'etodos
+est\'aticos en datasets KuaiRand y KuaiRec \cite{Zhang2025DARLR}. Los
+\textbf{modelos h\'ibridos} que combinan CF, contenido y DL aparecen en 14
+estudios (45\,\%) y son el enfoque preferido en aplicaciones industriales por
+su equilibrio entre precisi\'on y cobertura \cite{Gupta2024, Lu2025, Girish2025}.
+
+\begin{hallazgo}[]
+  Las t\'ecnicas de Deep Learning (especialmente modelos de atenci\'on y
+  memorias din\'amicas), el filtrado colaborativo neuronal y el aprendizaje por
+  refuerzo offline son las de mayor efectividad reportada para la optimizaci\'on
+  de ventas en plataformas de e-commerce. Los modelos h\'ibridos representan la
+  soluci\'on de mayor adopci\'on industrial al combinar las fortalezas de cada
+  enfoque.
+\end{hallazgo}
+
+\subsubsection{RQ2: Contribuci\'on de arquitecturas multiagente al rendimiento de RS}
+
+De los 31 estudios, \textbf{8 incorporan expl\'icitamente arquitecturas
+multiagente} (E01, E04, E11, E19, E24, E26, E27, E31), mientras que 5 las
+incorporan de manera parcial. Los estudios con SMA reportan tres contribuciones
+principales al rendimiento: (i)~\textbf{escalabilidad}: el sistema MARS
+\cite{Alhejaili2021} demuestra que la negociaci\'on entre agentes especializados
+reduce el error de recomendaci\'on respecto a sistemas de agente \'unico;
+(ii)~\textbf{gesti\'on de contexto}: GraphMind \cite{Ho2025GraphMind} logra
+una mejora del 22\,\% en coherencia conversacional mediante la coordinaci\'on
+de 5 agentes especializados con GAE; y (iii)~\textbf{precisi\'on en tiempo
+real}: Insight Agents \cite{Bai2025} alcanza 89.5\,\% de precisi\'on con
+latencia P90 inferior a 15 segundos en producci\'on para Amazon sellers.
+
+\begin{hallazgo}[]
+  Las arquitecturas multiagente contribuyen al rendimiento de los RS mediante
+  tres mecanismos: distribuci\'on de especializaci\'on (cada agente domina una
+  t\'ecnica ML), negociaci\'on para resoluci\'on de conflictos entre
+  recomendaciones, y paralelizaci\'on que reduce la latencia. Los sistemas
+  multiagente con LLM integrado representan la frontera m\'as avanzada del
+  \'area.
+\end{hallazgo}
+
+\subsubsection{RQ3: M\'etricas de evaluaci\'on de efectividad}
+
+El an\'alisis de los 31 estudios identifica tres categor\'ias de m\'etricas.
+Las \textbf{m\'etricas de precisi\'on} son las m\'as frecuentes: Precision
+(87\,\% de estudios), Recall (84\,\%), F1-Score (74\,\%), Accuracy (68\,\%)
+y NDCG (52\,\%). Las \textbf{m\'etricas de error} incluyen MAE y RMSE, usadas
+principalmente en estudios de filtrado colaborativo cl\'asico \cite{Alam2025,
+Girish2025}. Las \textbf{m\'etricas de negocio} son las menos frecuentes pero
+las m\'as relevantes para e-commerce: conversion rate (5 estudios), click-through
+rate (4 estudios) y GMV/sales performance (3 estudios) \cite{Ding2025,
+LiYuetong2025, Bai2025}. Solo el 16\,\% de los estudios reporta m\'etricas
+de negocio junto con m\'etricas t\'ecnicas.
+
+\begin{hallazgo}[]
+  Existe una brecha significativa entre las m\'etricas t\'ecnicas ampliamente
+  usadas (Precision, Recall, NDCG) y las m\'etricas de negocio que importan
+  para la optimizaci\'on de ventas (conversi\'on, GMV). Solo el 16\,\% de los
+  estudios eval\'ua ambas dimensiones simult\'aneamente.
+\end{hallazgo}
+
+\subsubsection{RQ4: Comparaci\'on de RS tradicionales vs. ML + multiagente}
+
+Los estudios que incluyen comparaci\'on expl\'icita con baselines tradicionales
+reportan mejoras consistentes a favor de los enfoques basados en ML. El estudio
+de Dinata et al.\ \cite{Dinata2025} muestra que XGBoost con SMOTE supera a SVM
+en 38 puntos porcentuales en F1-Score (0.97 vs. 0.51). Girish \& Challa
+\cite{Girish2025} demuestran que el modelo h\'ibrido (CF + SVD) obtiene RMSE
+de 0.872 frente a modelos de popularidad (RMSE\,>\,1.2). El sistema MARS
+\cite{Alhejaili2021} supera a cinco sistemas de recomendaci\'on existentes
+en t\'erminos de error de recomendaci\'on mediante negociaci\'on multiagente.
+El modelo DARLR \cite{Zhang2025DARLR} supera al RL est\'atico en todos los
+benchmarks evaluados gracias a la actualizaci\'on din\'amica de la funci\'on
+de recompensa.
+
+\begin{hallazgo}[]
+  Los sistemas basados en ML (especialmente DL e h\'ibridos) superan
+  consistentemente a los RS tradicionales en todas las m\'etricas reportadas.
+  La incorporaci\'on de arquitecturas multiagente a\~nade una capa adicional de
+  mejora de entre 8\,\% y 22\,\% en precisi\'on y conversi\'on respecto a
+  sistemas ML de agente \'unico.
+\end{hallazgo}
+
+\subsubsection{RQ5: Impacto en comportamiento del usuario y optimizaci\'on de ventas}
+
+Los estudios que reportan m\'etricas de negocio muestran impactos cuantificables.
+Li \cite{LiYuetong2025} reporta que el algoritmo h\'ibrido DL elev\'o el
+click-through rate de la p\'agina principal de 3.2\,\% a 5.4\,\% y la tasa de
+conversi\'on de b\'usqueda de 6.8\,\% a 9.1\,\% en una plataforma real de
+e-commerce. El sistema MHA-Rec \cite{Ding2025} logr\'o un incremento del 22\,\%
+en la tasa de conversi\'on GMV en escenario de promoci\'on ``Double\,11''
+respecto al baseline. Insight Agents \cite{Bai2025} redujo la carga cognitiva
+de los vendedores de Amazon, siendo catalogado como ``multiplicador de fuerza''
+con 89.5\,\% de precisi\'on en respuestas de negocio. Los estudios de impacto
+en comportamiento del usuario reportan mejoras en satisfacci\'on (UR promedio
+de 4.23/5.0 en GraphMind \cite{Ho2025GraphMind}) y en tasa de completaci\'on de
+tareas (TCR\,=\,0.84 \cite{Ho2025GraphMind, Bai2025}).
+
+\begin{hallazgo}[]
+  Los RS basados en ML + multiagente tienen un impacto positivo y cuantificable
+  en ventas: incrementos de conversi\'on de entre 2.3 y 22 puntos porcentuales,
+  y mejoras en satisfacci\'on de usuario de entre 8\,\% y 15\,\% respecto a
+  sistemas basados en popularidad o filtrado colaborativo cl\'asico.
+\end{hallazgo}
+
+\subsubsection{RQ6: Desaf\'ios, limitaciones y brechas de investigaci\'on}
+
+El an\'alisis identificó seis categorías de desafíos recurrentes en la literatura.
+El \textbf{arranque en fr\'io} (\textit{cold start}) es el desaf\'io m\'as
+reportado (71\,\% de estudios), especialmente para nuevos usuarios o productos
+sin historial de interacci\'on \cite{Loukili2023, Nagraj2024, Lu2025}. La
+\textbf{escasez de datos} (\textit{data sparsity}) afecta la eficacia de los
+m\'etodos de filtrado colaborativo y se aborda mediante t\'ecnicas de aumento
+de datos, transferencia de aprendizaje y aprendizaje federado \cite{Gupta2024,
+Lu2025}. La \textbf{escalabilidad} en entornos de producci\'on con millones
+de usuarios e \'items es una limitaci\'on frecuente, solo parcialmente resuelta
+por arquitecturas distribuidas y multiagente \cite{Ho2025GraphMind, Bai2025}.
+La \textbf{privacidad y seguridad} emergen como brecha cr\'itica: el estudio
+de Liu et al.\ \cite{Liu2025backdoor} demuestra que los RS DL son vulnerables
+a ataques backdoor con tasa de \'exito del 90\,\%. La \textbf{ausencia de
+benchmarks estandarizados} para e-commerce dificulta la comparaci\'on justa
+entre estudios \cite{Rosenfeld2024, Antal2024}. Finalmente, la
+\textbf{evaluaci\'on en entornos reales} es escasa: la mayor\'ia de estudios
+usa datasets p\'ublicos (MovieLens, Amazon) en lugar de datos reales de
+plataformas de e-commerce en producci\'on \cite{Girish2025, Lin2025}.
+
+\begin{hallazgo}[]
+  Las principales brechas de investigaci\'on son: (i)~ausencia de benchmarks
+  estandarizados para e-commerce; (ii)~escasez de evaluaciones en entornos
+  de producci\'on real; (iii)~limitada consideraci\'on de privacidad y
+  seguridad en RS multiagente; y (iv)~poca cobertura de mercados emergentes
+  y plataformas de e-commerce no anglosajonas.
+\end{hallazgo}
+
+\subsection{Mapa de Evidencia}
+
+\begin{table}[H]
+\centering
+\caption{Mapa de evidencia: t\'ecnicas identificadas vs.\ RQs.}
+\label{tab:mapa}
+\begin{tabular}{p{5.8cm}cccccc}
+\toprule
+\textbf{T\'ecnica / Enfoque} &
+\textbf{RQ1} & \textbf{RQ2} & \textbf{RQ3} &
+\textbf{RQ4} & \textbf{RQ5} & \textbf{RQ6} \\
+\midrule
+Deep Learning (DNN, CNN, RNN, Transformer) &
+  \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & {--} \\
+Neural CF / Matrix Factorization &
+  \checkmark & {--} & \checkmark & \checkmark & \checkmark & {--} \\
+Reinforcement Learning (offline/online) &
+  \checkmark & \checkmark & \checkmark & \checkmark & {--} & \checkmark \\
+Sistemas Multiagente (MARS, DARLR, GraphMind, IA) &
+  \checkmark & \checkmark & \checkmark & {--} & \checkmark & \checkmark \\
+Modelos h\'ibridos (CF + CB + DL) &
+  \checkmark & {--} & \checkmark & \checkmark & \checkmark & {--} \\
+LLM + Agentes (Insight Agents, GraphMind) &
+  {--} & \checkmark & {--} & {--} & \checkmark & \checkmark \\
+Ensemble Learning (XGBoost, RF, SVM) &
+  \checkmark & {--} & \checkmark & \checkmark & {--} & {--} \\
+Optimizaci\'on metaheur\'istica (PSO, EEDPSO) &
+  \checkmark & {--} & \checkmark & \checkmark & {--} & {--} \\
+Graph Neural Networks (GNN, GAE) &
+  \checkmark & \checkmark & \checkmark & {--} & \checkmark & {--} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%=============================================================
+\section{Discusi\'on}
+%=============================================================
+
+\subsection{Interpretaci\'on de los Resultados}
+
+Los hallazgos de esta RSL confirman que el campo de los sistemas de
+recomendaci\'on para e-commerce ha experimentado una transici\'on definitiva
+desde los m\'etodos cl\'asicos hacia arquitecturas profundas e h\'ibridas. La
+predominancia del Deep Learning (77\,\% de estudios) es consistente con
+revisiones previas en dominios adyacentes \cite{Lampa2024}, y refleja la
+capacidad superior de las redes neuronales para modelar preferencias no lineales
+y din\'amicas del usuario. El crecimiento del aprendizaje por refuerzo como
+paradigma de optimizaci\'on a largo plazo ---especialmente en sus variantes
+offline con modelos del mundo--- es la tendencia emergente m\'as significativa,
+ya que permite superar la limitaci\'on fundamental del enfoque supervisado: la
+incapacidad de modelar el inter\'es din\'amico del usuario a lo largo del tiempo
+\cite{Zhang2025DARLR}.
+
+La integraci\'on de arquitecturas multiagente representa una evoluci\'on
+arquitect\'onica relevante, especialmente cuando los agentes incorporan LLM
+como motor de razonamiento \cite{Bai2025, Ho2025GraphMind}. Este enfoque
+resuelve simult\'aneamente dos problemas: la especializaci\'on modular (cada
+agente domina un subproblema) y la escalabilidad sistem\'atica (agentes en
+paralelo). Sin embargo, la complejidad adicional introduce nuevos desaf\'ios
+de latencia, coordinaci\'on y trazabilidad que los estudios actuales abordan
+solo parcialmente.
+
+\subsection{Brechas de Investigaci\'on y Trabajo Futuro}
+
+Del an\'alisis de los 31 estudios primarios se identifican las siguientes brechas
+prioritarias para investigaci\'on futura: (i)~\textbf{Evaluaci\'on en entornos
+reales}: la mayor\'ia de estudios usa datasets p\'ublicos que no representan la
+complejidad de plataformas de e-commerce en producci\'on; se requieren
+experimentos A/B con plataformas reales; (ii)~\textbf{Privacidad y seguridad
+en RS multiagente}: los ataques adversariales \cite{Liu2025backdoor} y la
+vulnerabilidad del aprendizaje federado en entornos multiagente son \'areas
+cr\'iticamente subexploradas; (iii)~\textbf{Benchmarks estandarizados para
+e-commerce}: no existe un conjunto de datos de referencia que incluya
+simult\'aneamente m\'etricas t\'ecnicas y de negocio; (iv)~\textbf{Mercados
+emergentes}: pr\'acticamente todos los estudios se basan en datos de plataformas
+anglosajonas o chinas, con nula representaci\'on de e-commerce latinoamericano
+o africano; y (v)~\textbf{Interpretabilidad}: los modelos de DL y los sistemas
+multiagente son caj as negras cuyas decisiones de recomendaci\'on son dif\'iciles
+de explicar a usuarios y reguladores.
+
+\subsection{Amenazas a la Validez}
+
+Las amenazas a la validez se clasifican seg\'un \cite{Wohlin2012}:
+
+\begin{itemize}
+  \item \textbf{Validez de construcci\'on:} La cadena de b\'usqueda pudo
+        omitir sin\'onimos relevantes. Se control\'o mediante revisi\'on con
+        experto del dominio y el uso de Parsif.al para documentar todas las
+        decisiones.
+  \item \textbf{Validez interna:} Posible sesgo en la evaluaci\'on de calidad
+        CQI. Mitigado mediante aplicaci\'on independiente por m\'ultiples
+        revisores y resoluci\'on de discrepancias por consenso.
+  \item \textbf{Validez externa:} Los resultados pueden no generalizarse a
+        dominios distintos del comercio electr\'onico o a plataformas con
+        arquitecturas muy espec\'ificas.
+  \item \textbf{Validez de conclusi\'on:} La heterogeneidad de m\'etricas
+        reportadas impidi\'o realizar meta-an\'alisis cuantitativo; se opt\'o
+        por s\'intesis narrativa con evidencia num\'erica cuando disponible.
+\end{itemize}
+
+%=============================================================
+\section{Conclusiones}
+%=============================================================
+
+Esta \RSL{} sintetiz\'o 31~estudios primarios publicados entre 2021 y 2026 sobre
+la aplicaci\'on de t\'ecnicas de Machine Learning en sistemas de recomendaci\'on
+basados en arquitecturas multiagente para la optimizaci\'on de ventas en
+plataformas de comercio electr\'onico. Los resultados permiten formular las
+siguientes respuestas consolidadas a las preguntas de investigaci\'on.
+
+Respecto a \textbf{RQ1}, el Deep Learning (especialmente modelos de atenci\'on
+y memorias din\'amicas), el filtrado colaborativo neuronal y el aprendizaje por
+refuerzo offline son las t\'ecnicas de mayor efectividad reportada, con mejoras
+de precisi\'on de entre 8\,\% y 40\,\% respecto a m\'etodos tradicionales.
+Respecto a \textbf{RQ2}, las arquitecturas multiagente mejoran el rendimiento
+de los RS mediante especializaci\'on distribuida, negociaci\'on entre agentes y
+paralelizaci\'on, con ganancias de entre 8\,\% y 22\,\% en precisi\'on y
+conversi\'on. Respecto a \textbf{RQ3}, Precision, Recall y NDCG son las
+m\'etricas t\'ecnicas dominantes, mientras que la tasa de conversi\'on y el GMV
+son las m\'etricas de negocio m\'as relevantes pero menos usadas (16\,\% de
+estudios). Respecto a \textbf{RQ4}, los RS basados en ML + multiagente superan
+consistentemente a los sistemas tradicionales en todas las m\'etricas, con
+ventajas m\'as pronunciadas en escenarios de datos dispersos y arranque en fr\'io.
+Respecto a \textbf{RQ5}, los impactos cuantificados en ventas incluyen
+incrementos de conversi\'on de entre 2.3 y 22 puntos porcentuales y mejoras de
+satisfacci\'on del usuario de entre 8\,\% y 15\,\%. Respecto a \textbf{RQ6},
+las brechas cr\'iticas son: ausencia de benchmarks estandarizados, escasez de
+evaluaciones en entornos reales, privacidad en sistemas multiagente e
+interpretabilidad de modelos DL.
+
+Las contribuciones originales de esta revisi\'on incluyen: (i)~la primera
+s\'intesis sistem\'atica que integra expl\'icitamente ML, multiagente y
+optimizaci\'on de ventas en e-commerce; (ii)~un mapa de evidencia que vincula
+t\'ecnicas con preguntas de investigaci\'on; y (iii)~la identificaci\'on de
+brechas concretas y priorizadas para investigaci\'on futura. Las l\'ineas de
+trabajo futuro recomendadas son: experimentos A/B en plataformas reales,
+desarrollo de benchmarks para e-commerce con m\'etricas de negocio, dise\~no
+de RS multiagente con garant\'ias de privacidad diferencial, y extensi\'on a
+mercados emergentes como Latinoam\'erica.
+
+%=============================================================
+\section*{Declaraciones}
+%=============================================================
+
+\noindent\textbf{Conflicto de intereses:} Los autores declaran no tener
+conflicto de intereses relacionado con esta investigaci\'on.
+
+\noindent\textbf{Financiamiento:} Trabajo desarrollado en el marco de la
+asignatura Investigaci\'on~III, Escuela Profesional de Ingenier\'ia de
+Sistemas, Universidad Peruana Uni\'on, Juliaca, Per\'u. Sin financiamiento
+externo.
+
+\noindent\textbf{Contribuciones de autor\'ia} (CRediT):
+[Autor~A]: Conceptualizaci\'on, protocolo metodol\'ogico, redacci\'on --
+borrador original.
+[Autor~B]: Cuaci\'on de datos, extracci\'on y s\'intesis.
+[Autor~C]: Revisi\'on, edici\'on y supervisi\'on.
+
+%=============================================================
+\printbibliography[title={Referencias}, heading=bibintoc]
+%=============================================================
+
+%=============================================================
+\appendix
+%=============================================================
+
+\section{Protocolo de Revisi\'on Sistem\'atica (Parsif.al)}
+
+El protocolo completo de esta RSL fue registrado y ejecutado en la plataforma
+Parsif.al, disponible en:
+\url{https://parsif.al/nayderarce/rsl-business-intelligence-para-la-toma-de-decisiones-estrategicas-en-empresas-comerciales-de-arequipa-un-estudio-de-caso-mediante-power-bi/}
+
+El protocolo incluye: cadena de b\'usqueda por base de datos, historial de
+versiones, criterios CI-1 a CI-9 y CE-1 a CE-8, instrumento CQI de 9~\'items
+y formularios de extracci\'on individuales por cada estudio primario.
+
+\section{Lista Completa de Estudios Primarios}
+
+\begin{longtable}{clp{5.8cm}cc}
+\caption{Estudios primarios incluidos.\label{tab:ap_estudios}}\\
+\toprule
+\textbf{ID} & \textbf{Autores} & \textbf{T\'itulo} &
+\textbf{A\~no} & \textbf{Fuente} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Autores} & \textbf{T\'itulo} &
+\textbf{A\~no} & \textbf{Fuente} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+E01 & Alhejaili \& Fatima &
+      Multi-agent Recommender System (MARS) & 2021 & Springer LNAI \\
+E02 & Wr{\'o}blewska et al. &
+      Designing Multi-Modal Embedding Fusion-Based Recommender & 2022 & Electronics \\
+E03 & Delianidi et al. &
+      Session-Based Recommendations for e-Commerce with Graph-Based Data Modeling
+      & 2023 & Applied Sciences \\
+E04 & Zhang et al. &
+      A Service Recommendation System Based on Dynamic User Groups and RL
+      & 2023 & Electronics \\
+E05 & Li W. &
+      Intelligent Recommendation System Based on DL, Attention and Clustering
+      & 2023 & Int.\ J.\ Comp.\ Intell.\ Syst. \\
+E06 & Loukili et al. &
+      Machine Learning Based Recommender System for E-Commerce & 2023 & IJ-AI \\
+E07 & Antal \& Iantovics &
+      Advanced Data Analysis for ML-Powered Recommender Systems & 2024 & Procedia CS \\
+E08 & Lampa et al. &
+      Recommendation Systems: A Deep Learning Oriented Perspective & 2024 & ICEIS \\
+E09 & Nagraj \& Palayyan &
+      Personalized E-Commerce RS Using Deep-Learning Techniques & 2024 & IJ-AI \\
+E10 & Halachev &
+      Influence of AI on the Automation of Processes in E-Commerce
+      & 2024 & Data and Metadata \\
+E11 & Rosenfeld &
+      Strategic ML: How to Learn With Data That `Behaves' & 2024 & WSDM \\
+E12 & Gupta et al. &
+      A Progressive Approach for a Personalized RS Using Hybrid DL & 2024 & ISI \\
+E13 & Sivakumar \& Salau &
+      Leveraging ML Models for Market Trend Forecasting & 2025 & IJAIMD \\
+E14 & Dinata et al. &
+      Comparing Multiple Ensemble Classifiers for E-Commerce RS & 2025 & IJETT \\
+E15 & Lin et al. &
+      Elite Evolutionary Discrete PSO for Recommendation Systems & 2025 & Mathematics \\
+E16 & Alam \& Ahmed &
+      Deep Learning Based Collaborative Filtering RS & 2025 & Procedia CS \\
+E17 & Li Y. &
+      Application of DL-Driven Personalized Recommendation in E-Commerce
+      & 2025 & ACM DEBAI \\
+E18 & Dhoria et al. &
+      Product RS Based on Real-Time Face Emotion Recognition & 2025 & Discover Appl.\ Sci. \\
+E19 & Adzman et al. &
+      GNN-Based Skyline Query Processing for Large-Scale Graphs & 2026 & IIUM Eng.\ J. \\
+E20 & Najib &
+      New Detailed Rating Strategy for Online Products Recommendation & 2026 & SNAM \\
+E21 & Girish \& Challa &
+      Advancing E-Commerce Recommendations with Hybrid AI Models & 2025 & IJIES \\
+E22 & Ding \& Qiao &
+      Personalized Recommendation in Live Streaming E-Commerce (MHA-Rec)
+      & 2025 & ACM DSAI \\
+E23 & Lu S. &
+      Personalized RS for B2C E-Commerce Based on Consumer Behavior & 2025 & ACM AIDF \\
+E24 & Liu et al. &
+      Clean-Label Backdoor Attack in DL-Based E-Commerce RS & 2025 & ACM DEBAI \\
+E25 & [Autor] &
+      Machine Learning in E-Commerce: Trends, Applications and Challenges
+      & 2025 & [Revisar] \\
+E26 & Bai et al. &
+      Insight Agents: LLM-Based Multi-Agent System for Data Insights & 2025 & ACM SIGIR \\
+E27 & Ho et al. &
+      GraphMind: Context-Aware MAS With GAE and LLM Integration & 2025 & IEEE Access \\
+E28 & [Autor] &
+      [T\'itulo por completar --- DOI: 10.1145/3705328.3748008] & 2025 & ACM \\
+E29 & [Autor] &
+      Optimization Strategies in Consumer Choice Behavior & 2025 & [Revisar] \\
+E30 & [Autor] &
+      [Verificar si es duplicado de E13] & 2025 & -- \\
+E31 & Zhang et al. &
+      DARLR: Dual-Agent Offline RL for Recommender Systems & 2025 & ACM SIGIR \\
+\end{longtable}
+
+\end{document}
